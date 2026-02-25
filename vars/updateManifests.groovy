@@ -1,14 +1,14 @@
 def call(Map params) {
-    def manifestsRepo = params.manifestsRepo
-    def branch = params.branch
+    // def manifestsRepo = params.manifestsRepo
+    // def branch = params.branch
     def imageName = params.imageName
     def newTag = params.newTag
     def deploymentFile = params.deploymentFile
-    def credentialsId = params.credentialsId
+    // def credentialsId = params.credentialsId
     
     dir('manifests') {
         // Clone the manifests repository
-        git branch: branch, url: manifestsRepo, credentialsId: credentialsId
+        // git branch: branch, url: manifestsRepo, credentialsId: credentialsId
         
         // Update the image tag in deployment.yaml
         sh """
