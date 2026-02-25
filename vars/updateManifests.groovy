@@ -1,18 +1,27 @@
+// vars/updateManifests.groovy
 def call(Map params) {
-    // def manifestsRepo = params.manifestsRepo
-    // def branch = params.branch
     def imageName = params.imageName
     def newTag = params.newTag
     def deploymentFile = params.deploymentFile
-    // def credentialsId = params.credentialsId
     
-    dir('manifests') {
-        // Clone the manifests repository
-        // git branch: branch, url: manifestsRepo, credentialsId: credentialsId
-        
-        // Update the image tag in deployment.yaml
-        sh """
+    echo "Updating ${deploymentFile} with image ${imageName}:${newTag}"
+    
+    
+    // Check if the file exists
+    sh """
+        if [ -f "${deploymentFile}" ]; then
+            echo "Found deployment file at ${deploymentFile}"
             sed -i "s|image: ${imageName}:.*|image: ${imageName}:${newTag}|g" ${deploymentFile}
-        """
-    }
+            echo "Updated ${deploymentFile} with new image tag"
+            grep "image:" ${deploymentFile} || echo "No image line found"
+        else
+            echo "ERROR: Deployment file not found at ${deploymentFile}"
+            echo "Current directory: \$(pwd)"
+            echo "Directory contents:"
+            ls -la
+            echo "Looking for kubernetes directory:"
+            ls -la kubernetes/ || echo "kubernetes directory not found"
+            exit 1
+        fi
+    """
 }
