@@ -67,9 +67,6 @@ def call(Map params) {
                 echo "Pushing to ${branch} branch..."
                 git push origin ${branch}
                 
-                // Also create a tag if needed
-                // git tag "${BUILD_NUMBER}"
-                // git push origin "${BUILD_NUMBER}"
             fi
         """
     }
