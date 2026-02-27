@@ -6,7 +6,8 @@ def call(Map params) {
     
     dir('manifests') {
         sh """
-        
+            git config --global user.email "redaessawy81@gmail.com"
+            git config --global user.name "RedaEssawy"
             git add .
             git commit -m "${commitMessage}" || echo "No changes to commit"
             git push origin ${branch}
